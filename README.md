@@ -1,25 +1,22 @@
+Forked from amethyst project [Amethyst](https://github.com/rckarns8/amethyst)
 Written 2023, by Rachael Storo. Based on a workflow written by Nastassia Patin.
 v. 1.0
 # Important notes:
 - Amethyst requires python >3.6 
 - Amethyst requires data files to be located in amethyst/00_data/fastq, separated in R1 for forward reads, R2 for reverse.
-- to create the multitrim environment, navigate to amethyst directory, which contains the relevant yaml file, before running the commands found in the [Quick Start Guide](https://github.com/rckarns8/amethyst/wiki/0.-Quick-Start-Guide)
 
+# Setup
 
+# Conda Environments
+```
+mamba create -n snakemake -c conda-forge -c bioconda snakemake
+mamba create -n amethyst-testing-qc -c conda-forge -c bioconda fastqc multiqc  
+mamba create -n amethyst-testing-mt -c conda-forge -c bioconda -c kgerhardt multitrim pigz fastp seqtk falco faqcs
+mamba create -n amethyst-testing-as -c conda-forge -c bioconda megahit seqkit
+```
 
-To get started, please see the [Quick Start Guide](https://github.com/rckarns8/amethyst/wiki/0.-Quick-Start-Guide)
-
-
-
-Features to add in new versions: 
-- config file to globally update variables
-- co-assembly capabilities
-- overarching rules to combine pseudo rules
-- benchmarking
-- init file to make all conda environments needed to run amethyst
-- yaml files for conda environments needed to run amethyst
-- fix issue where adapt_trim is overwriting temp files for each sample
-- choice of assembler
-- read-based analyses and gene annotation
-- Binning for MAGS
-- Docker Containers 
+# Running the workflow
+```
+mamba activate snakemake
+snakemake --use-conda --cores
+```
