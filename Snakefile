@@ -33,6 +33,10 @@ rule fastqc:
         outfolder1 = "00_data/fastq/fastqc-R1",
         outfolder2 = "00_data/fastq/fastqc-R2"
     threads: 5 
+    log:
+        "logs/fastqc/{sample}.log"
+    benchmark:
+        "benchmarks/fastqc/{sample}.txt"
     shell:
         """
         fastqc -t {threads} -o {params.outfolder1} {input.r1}
@@ -49,6 +53,10 @@ rule multiqc:
     params:
         outfolder1 = "00_data/fastq/fastqc-R1",
         outfolder2 = "00_data/fastq/fastqc-R2"
+    log:
+        "logs/multiqc/multiqc.log"
+    benchmark:
+        "benchmarks/multiqc/multiqc.txt"
     shell:
         """
         multiqc --export -o {params.outfolder1} {params.outfolder1}
@@ -74,6 +82,10 @@ rule multitrim:
         tempfolder1 = "01_qc/trimmed_reads/R1/{sample}",
         tempfolder2 = "01_qc/trimmed_reads/R2/{sample}",
     threads: 5
+    log:
+        "logs/multitrim/{sample}.log"
+    benchmark:
+        "benchmarks/multitrim/{sample}.txt"
     shell:
         """
         mkdir -p {params.tempfolder1}
@@ -108,6 +120,10 @@ rule megahit:
         sample = "{sample}",
         outfolder = "02_assembly/{sample}"
     threads: 20
+    log:
+        "logs/megahit/{sample}.log"
+    benchmark:
+        "benchmarks/megahit/{sample}.txt"
     shell:
         """
         rm -rf {params.outfolder}
